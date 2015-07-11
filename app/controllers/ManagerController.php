@@ -132,13 +132,19 @@ class ManagerController extends \BaseController {
 	        $this->user->manager_id      = Input::get('id');
 	        $this->user->password   = Hash::make(Input::get('password'));
 			
-			$this->manager->users()->save($this->user);
- 
+
+			//$this->manager->users()->save($this->user);
+ 			DB::table('users')
+            ->where('username', $this->user->username)
+            ->update(array('email' => $this->user->email,'first_name' => $this->user->first_name));
+	 		
 	        return Redirect::to('/managers');
 	    }
 
 	    else
         {
+        	print_r($id);
+        	exit;
         	return Redirect::to('/managers/'.$id.'/edit')->withErrors($validation);
         }
 
@@ -155,7 +161,7 @@ class ManagerController extends \BaseController {
 	public function destroy($id)
 	{
 		Manager::join('users','managers.id', '=', 'users.manager_id')->select('managers.id as id', 'managers.manager as manager', 'users.username as username', 'users.email as email')->destroy($id);
- 
+		
         return Redirect::to('/managers');	
 	}
 
