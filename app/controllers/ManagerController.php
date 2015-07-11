@@ -159,8 +159,8 @@ class ManagerController extends \BaseController {
 	 */
 	public function destroy($id)
 	{
-		Manager::join('users','managers.id', '=', 'users.manager_id')->select('managers.id as id', 'managers.manager as manager', 'users.username as username', 'users.email as email')->destroy($id);
-		
+		Manager::destroy($id);
+		DB::table('users')->where('manager_id', $id)->delete();
         return Redirect::to('/managers');	
 	}
 

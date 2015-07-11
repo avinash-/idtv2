@@ -55,7 +55,7 @@ return array(
 		'mysql' => array(
 			'driver'    => 'mysql',
 			'host'      => 'localhost',
-			'database'  => 'idtv21',
+			'database'  => 'idtv2',
 			'username'  => 'root',
 			'password'  => 'password',
 			'charset'   => 'utf8',
