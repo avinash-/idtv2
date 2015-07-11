@@ -58,7 +58,7 @@ class HomeController extends BaseController {
              $avg[$key] = DB::select('SELECT AVG(percentage) as avg FROM (SELECT (SUM(t.access)/(count(*))*100) as percentage, a.id as aid,t.tool_name, a.manager_id as mid,a.account_name as aname,m.manager as Manager FROM accounts a JOIN managers m ON(m.id = a.manager_id) JOIN tools t ON(t.acc_id = a.id)  where m.id = '.$manager[$key]->id.' group by (t.acc_id)) as mavg');
         }       
         
-        $colors = array('0' => 'primary','1' => 'red','2' => 'green','3' => 'yellow');
+        $colors = array('0' => 'primary', '1' =>'red', '2' => 'green', '3' => 'yellow');
         
         return View::make('admin._main',compact('manager','colors','avg'));
     }

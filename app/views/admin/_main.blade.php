@@ -41,6 +41,7 @@
         </div>
     </div>
     <?php $i++; $c++?>
+    <?php if($i >= 4) $i=0;?>
     @endforeach
 </div>
 @stop
@@ -74,7 +75,7 @@
                 ['#D3B6C6', '#4B253A'], ['#FCE6A4', '#EFB917'], ['#BEE3F7', '#45AEEA'], ['#F8F9B6', '#D2D558'], ['#F4BCBF', '#D43A43']
             ], circles = [];
 
-            for (var i = 1; i <= 5; i++) {
+            for (var i = 1; i <= <?php echo count($manager)?>; i++) {
                 var child = document.getElementById('circles-' + i),
                     percentage = $('#manager_'+i).text();
 
