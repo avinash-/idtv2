@@ -132,8 +132,11 @@ class ManagerController extends \BaseController {
 	        $this->user->manager_id      = Input::get('id');
 	        $this->user->password   = Hash::make(Input::get('password'));
 			
-			$this->manager->users()->save($this->user);
- 
+			//$this->manager->users()->save($this->user);
+ 			DB::table('users')
+            ->where('username', $this->user->username)
+            ->update(array('email' => $this->user->email,'first_name' => $this->user->first_name));
+
 	        return Redirect::to('/managers');
 	    }
 
