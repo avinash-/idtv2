@@ -74,6 +74,15 @@ class HomeController extends BaseController {
     }
 
 
+    public function delete($id)
+    {
+        $manager = Manager::where('id','=',$id)->get();
+        print_r($id);
+        exit;
+        //Manager::destroy($id);
+        return View::make('manager.main',compact('manager','avg'));
+    }
+
     public function getLogin()
     {
         return Redirect::to('/');
