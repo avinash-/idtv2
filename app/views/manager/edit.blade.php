@@ -17,7 +17,7 @@
  
     <div class='row form-group'>
          <div class="col-md-2">{{ Form::label('id', 'Manager ID') }}</div>
-        <div class="col-md-10">{{ Form::text('id', null, ['placeholder' => 'Manager ID', 'class' => 'form-control']) }}</div>
+        <div class="col-md-10">{{ Form::text('id', null, ['placeholder' => 'Manager ID', 'class' => 'form-control','readonly']) }}</div>
     </div>
  
     <div class='row form-group'>
