@@ -142,8 +142,8 @@ class ManagerController extends \BaseController {
 
 	    else
         {
-        	print_r($id);
-        	exit;
+        	//print_r($id);
+        	//exit;
         	return Redirect::to('/managers/'.$id.'/edit')->withErrors($validation);
         }
 
