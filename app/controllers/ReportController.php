@@ -9,7 +9,7 @@ class ReportController extends \BaseController {
 	 */
 	public function index()
 	{
-		return View::make('admin.dashboard');
+		return View::make('reports.index');
 	}
 
 
@@ -18,9 +18,12 @@ class ReportController extends \BaseController {
 	 *
 	 * @return Response
 	 */
-	public function create()
+	public function getData()
 	{
-		//
+		$report = DB::table('reports')->select('id','reports.manager_name as mname','reports.thisweek_percentage as new', 'reports.lastweek_percentage as old')->groupBy('manager_id')->orderBy('created_at','DESC')->get();
+
+		return $report;
+
 	}
 
 
