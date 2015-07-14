@@ -12,10 +12,10 @@ class AltrUsersTableToolsTimestamps extends Migration {
 	 */
 	public function up()
 	{
-		Schema::table('tools', function($table)
-		{
-		 $table->timestamps();
-		});
+		// Schema::table('tools', function($table)
+		// {
+		//  $table->timestamps();
+		// });
 
 	}
 
