@@ -20,10 +20,21 @@ class ReportController extends \BaseController {
 	 */
 	public function getData()
 	{
-		$report = DB::table('reports')->select('id','reports.manager_name as mname','reports.thisweek_percentage as new', 'reports.lastweek_percentage as old')->groupBy('manager_id')->orderBy('created_at','DESC')->get();
+		$report = DB::table('reports')->select('id','reports.manager_name as mname','reports.thisweek_percentage as new', 'reports.lastweek_percentage as old')->groupBy('manager_id')->orderBy('created_at','DESC')->get()->toJSON();
 
-		return $report;
+		//return $report;
+		//return View::make('reports.index', [ 'mname' => $mname, 'new' => $new, 'old' => $old ]);
+		//$range = CarbonCarbon::now()->subDays(30);
 
+		$stats = DB::table('orders')
+		  ->where('created_at', '>=', $range)
+		  ->groupBy('date')
+		  ->orderBy('date', 'ASC')
+		  ->get([
+		    DB::raw('Date(created_at) as date'),
+		    DB::raw('COUNT(*) as value')
+		  ])
+		  ->toJSON();
 	}
 
 

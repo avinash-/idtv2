@@ -17,7 +17,8 @@ Route::get('/manager/details/{id}','ManagerController@getDetails');
 Route::get('/account/details/{id}','ManagerController@accDetails');
 Route::get('/tools/details/{id}','ManagerController@toolDetails');
 Route::get('/reports','ReportController@index');
-Route::get('/reports/data', 'ReportController@getData');
+//Route::get('/reports/data', 'ReportController@getData');
+Route::get('api','ReportController@getData');
 
 Route::resource('/employees','EmployeeController');
 Route::resource('/accounts','AccountsController');

@@ -189,7 +189,7 @@ class ManagerController extends \BaseController {
 		$acc_details = Manager::join('accounts as a','a.manager_id','=','managers.id')
 						  	  ->join('tools as t','t.acc_id','=','a.id')
 						  	  ->select(DB::raw('SUM(t.access)/(count(*))*100 as percentage'),'t.emp_name as ename','t.access as access','a.id as AccId','t.tool_name as ToolName','a.account_name as AccountName','t.emp_id as eid','managers.manager as ManagerName')
-						  	  ->where('a.id','=',$id)->groupBy('t.emp_id')->get();
+						  	  ->where('a.id','=',$id)->groupBy('t.emp_id')->get();	  
 
 		return View::make('manager.tables._acc_details',compact('acc_details'));
 	}
@@ -202,15 +202,29 @@ class ManagerController extends \BaseController {
 	 */
 	public function toolDetails($id)
 	{
+		// $tool_details = DB::table('tools')
+		// 		          ->select('tool_name as tname','emp_name as ename','emp_id as eid','access as access')	
+		// 		          ->where('emp_id','=',$id)
+		// 		          ->get();
 		$tool_details = DB::table('tools')
-				          ->select('tool_name as tname','emp_name as ename','emp_id as eid','access as access')	
-				          ->where('emp_id','=',$id)
-				          ->get();
-		$avg = DB::table('tools')
-		         ->select(DB::raw('AVG(access)*100 as avg'))	
-		         ->where('emp_id','=',$id)
-		         ->get();
+							->join('accounts','accounts.id', '=', 'tools.acc_id')
+							->select('tools.emp_id as eid','tools.emp_name as ename','tools.tool_name as tname','tools.access as access')
+							->where('tools.emp_id', '=', $id)
+							->where('accounts.manager_id', '=', 1)
+							->where('accounts.id', '=', 1)
+							->get();
+		// $avg = DB::table('tools')
+		//          ->select(DB::raw('AVG(access)*100 as avg'))	
+		//          ->where('emp_id','=',$id)
+		//          ->get();
 
+			$avg = DB::table('tools')
+						->join('accounts','accounts.id', '=', 'tools.acc_id')
+		         		->select(DB::raw('AVG(access)*100 as avg'))	
+		          		->where('emp_id','=',$id)
+		          		->where('accounts.manager_id', '=', 1)
+						->where('accounts.id', '=', 1)
+          				->get();
 		return View::make('manager.tables._tool_details',compact('tool_details','avg'));
 	}
 

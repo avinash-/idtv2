@@ -67,7 +67,7 @@ class AccountsTableSeeder extends Seeder {
       DB::table('accounts')->insert([
                 'id'   => '8',
                 'manager_id'  => '1',
-                'account_name' => 'NAvya',
+                'account_name' => 'Avinash',
                 'created_at' => new DateTime(),
                 'updated_at' => new DateTime()
             ]);
