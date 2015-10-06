@@ -14,8 +14,8 @@
 Route::get('/welcome/admin','HomeController@dashboard');
 Route::get('/manager/{id}','HomeController@manager');
 Route::get('/manager/details/{id}','ManagerController@getDetails');
-Route::get('/account/details/{id}','ManagerController@accDetails');
-Route::get('/tools/details/{id}','ManagerController@toolDetails');
+Route::get('/account/details/{managerId}/{id}','ManagerController@accDetails');
+Route::get('/tools/details/{managerId}/{accountId}/{id}','ManagerController@toolDetails');
 Route::get('/reports','ReportController@index');
 //Route::get('/reports/data', 'ReportController@getData');
 Route::get('api','ReportController@getData');
@@ -25,7 +25,6 @@ Route::resource('/accounts','AccountsController');
 Route::resource('/user', 'UserController');
 Route::resource('/managers', 'ManagerController');
 Route::controller('/', 'HomeController');
-
 
 // Route::get('/', function()
 // {

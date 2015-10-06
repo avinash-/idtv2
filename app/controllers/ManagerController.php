@@ -171,7 +171,7 @@ class ManagerController extends \BaseController {
 	{
 		$details = Manager::join('accounts as a','a.manager_id','=','managers.id')
 						  ->join('tools as t','t.acc_id','=','a.id')
-						  ->select(DB::raw('SUM(t.access)/(count(*))*100 as percentage'),'a.id as AccId','t.tool_name as ToolName','a.account_name as AccountName','managers.manager as ManagerName')
+						  ->select(DB::raw('SUM(t.access)/(count(*))*100 as percentage'),'a.id as AccId','t.tool_name as ToolName','a.account_name as AccountName','managers.manager as ManagerName','a.manager_id as managerId')
 						  ->where('managers.id','=',$id)->groupBy('t.acc_id')->get();
 	 
 		return View::make('manager.tables._details',compact('details'));
@@ -183,13 +183,15 @@ class ManagerController extends \BaseController {
 	 *
 	 * @return Response
 	 */
-	public function accDetails($id)
+	public function accDetails($managerId,$id)
 	{
 		// SELECT t.ID as tid, t.emp_name as ename, t.emp_id as eid,t.access as access, a.Account_name as aname,m.Manager as manager FROM Tools t JOIN Accounts a ON(a.ID = t.Acc_id ) JOIN Managers m ON(m.ID = a.Manager_id) where t.Acc_id = ".$acc_id." group by(t.emp_id) 
 		$acc_details = Manager::join('accounts as a','a.manager_id','=','managers.id')
-						  	  ->join('tools as t','t.acc_id','=','a.id')
-						  	  ->select(DB::raw('SUM(t.access)/(count(*))*100 as percentage'),'t.emp_name as ename','t.access as access','a.id as AccId','t.tool_name as ToolName','a.account_name as AccountName','t.emp_id as eid','managers.manager as ManagerName')
-						  	  ->where('a.id','=',$id)->groupBy('t.emp_id')->get();	  
+			  	  ->join('tools as t','t.acc_id','=','a.id')
+			  	  ->select(DB::raw('SUM(t.access)/(count(*))*100 as percentage'),'t.emp_name as ename','t.access as access','a.id as AccId','t.tool_name as ToolName','a.account_name as AccountName','t.emp_id as eid','managers.manager as ManagerName','a.manager_id as managerId','a.id as accountId')
+			  	  ->where('a.id','=',$id)
+			  	  ->where('a.manager_id', '=', $managerId)
+			  	  ->groupBy('t.emp_id')->get();	  
 
 		return View::make('manager.tables._acc_details',compact('acc_details'));
 	}
@@ -200,7 +202,7 @@ class ManagerController extends \BaseController {
 	 *
 	 * @return Response
 	 */
-	public function toolDetails($id)
+	public function toolDetails($managerId, $accountId, $id)
 	{
 		// $tool_details = DB::table('tools')
 		// 		          ->select('tool_name as tname','emp_name as ename','emp_id as eid','access as access')	
@@ -210,8 +212,8 @@ class ManagerController extends \BaseController {
 							->join('accounts','accounts.id', '=', 'tools.acc_id')
 							->select('tools.emp_id as eid','tools.emp_name as ename','tools.tool_name as tname','tools.access as access')
 							->where('tools.emp_id', '=', $id)
-							->where('accounts.manager_id', '=', 1)
-							->where('accounts.id', '=', 1)
+							->where('accounts.manager_id', '=', $managerId)
+							->where('accounts.id', '=', $accountId)
 							->get();
 		// $avg = DB::table('tools')
 		//          ->select(DB::raw('AVG(access)*100 as avg'))	

@@ -32,7 +32,7 @@
                                     <td >{{$ad->ManagerName}}</td>
                                     <td id="aname">{{$ad->AccountName}}</td>
                                     <td>{{$ad->percentage}}</td>
-                                    <td><a href="/tools/details/{{$ad->eid}}" class="btn btn-info btn-sm">View all Tools</a></td>
+                                    <td><a href="/tools/details/{{$ad->managerId}}/{{$ad->accountId}}/{{$ad->eid}}" class="btn btn-info btn-sm">View all Tools</a></td>
                                 </tr>
                                 <?php $i++;?>
                                 @endforeach
