@@ -224,8 +224,8 @@ class ManagerController extends \BaseController {
 						->join('accounts','accounts.id', '=', 'tools.acc_id')
 		         		->select(DB::raw('AVG(access)*100 as avg'))	
 		          		->where('emp_id','=',$id)
-		          		->where('accounts.manager_id', '=', 1)
-						->where('accounts.id', '=', 1)
+		          		->where('accounts.manager_id', '=', $managerId)
+						->where('accounts.id', '=', $accountId)
           				->get();
 		return View::make('manager.tables._tool_details',compact('tool_details','avg'));
 	}
